@@ -25,7 +25,7 @@
 
 @interface HSHelpStack ()
 
-@property (nonatomic, strong, readwrite) HSAppearance* appearance;
+@property (nonatomic, strong, readwrite) HSAppearance* hsAppearance;
 
 @end
 
@@ -39,7 +39,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         helpStack = [[self alloc] init];
-        helpStack.appearance = [HSAppearance instance];
+        helpStack.hsAppearance = [HSAppearance instance];
         helpStack.requiresNetwork = YES;
         helpStack.showCredits = YES;
     });
@@ -48,7 +48,7 @@
 
 
 - (void)setThemeFrompList:(NSString *)pListPath {
-    [self.appearance setCustomThemeProperties:[self readThemePropertiesFrompList:pListPath]];
+    [self.hsAppearance setCustomThemeProperties:[self readThemePropertiesFrompList:pListPath]];
 }
 
 - (NSDictionary *)readThemePropertiesFrompList:(NSString *)pListPath {
@@ -72,14 +72,16 @@
     
     UIViewController* mainController;
     if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        UIStoryboard* helpStoryboard = [UIStoryboard storyboardWithName:@"HelpStackStoryboard-iPad" bundle:[NSBundle mainBundle]];
+        UIStoryboard* helpStoryboard = [UIStoryboard storyboardWithName:@"HelpStackStoryboard-iPad"
+                                                                 bundle:[NSBundle bundleForClass:[self class]]];
         mainController = [helpStoryboard instantiateInitialViewController];
         [mainController setModalPresentationStyle:UIModalPresentationFormSheet];
         [parentController presentViewController:mainController animated:YES completion:completion];
         
     }
     else {
-        UIStoryboard* helpStoryboard = [UIStoryboard storyboardWithName:@"HelpStackStoryboard" bundle:[NSBundle mainBundle]];
+        UIStoryboard* helpStoryboard = [UIStoryboard storyboardWithName:@"HelpStackStoryboard"
+                                                                 bundle:[NSBundle bundleForClass:[self class]]];
         mainController = [helpStoryboard instantiateInitialViewController];
         [parentController presentViewController:mainController animated:YES completion:completion];
     }

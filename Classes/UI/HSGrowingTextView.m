@@ -63,7 +63,7 @@
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
         [self commonInitialiser];
-        [[[HSHelpStack instance] appearance] customizeTextView:self.internalTextView];
+        [[[HSHelpStack instance] hsAppearance] customizeTextView:self.internalTextView];
     }
     return self;
 }
@@ -243,7 +243,7 @@
 - (void)refreshHeight
 {
 	//size of content, so we can set the frame of self
-	NSInteger newSizeH = [self measureHeight];
+	NSInteger newSizeH = ceilf([self measureHeight]);
 	if (newSizeH < minHeight || !internalTextView.hasText) {
         newSizeH = minHeight; //not smalles than minHeight
     }
